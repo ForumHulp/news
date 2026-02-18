@@ -1,0 +1,15 @@
+{
+  "domain": "news",
+  "name": "News Media Player",
+  "version": "1.1.0",
+  "documentation": "https://github.com/ForumHulp/news",
+  "issue_tracker": "https://github.com/ForumHulp/news/issues",
+  "requirements": [
+    "feedparser>=6.0.10"
+  ],
+  "dependencies": [],
+  "codeowners": ["@ForumHulp"],
+  "integration_type": "hub",
+  "config_flow": true,
+  "iot_class": "cloud_polling"
+}
