@@ -132,3 +132,4 @@ async def speak_news(hass, entry, coordinator):
             )
         except Exception as e:
             _LOGGER.error("Failed to say 'Einde journaal': %s", e)
+    await coordinator.async_clear_notifications()

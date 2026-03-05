@@ -432,3 +432,37 @@ class NewsCoordinator(DataUpdateCoordinator[list[dict]]):
             for article in self.data
             if self._article_id(article) not in self._seen_articles
         ]
+
+    async def async_clear_notifications(self):
+        """Dismiss Dwains notifications and clear queue."""
+        
+        # Clear queue
+        self._notification_queue.clear()
+        self._seen_articles.clear()
+
+        # Reset state
+        self._current_notification_active = False
+
+        # Dismiss Dwains notifications
+        if self.hass.services.has_service(
+            "dwains_dashboard", "notification_dismiss"
+        ):
+            await self.hass.services.async_call(
+                "dwains_dashboard",
+                "notification_dismiss",
+                {
+                    "notification_id": f"news_{self.entry.entry_id}",
+                    "entity_id_format": "dashboard.{}",
+                },
+                blocking=True,
+            )
+
+            await self.hass.services.async_call(
+                "dwains_dashboard",
+                "notification_dismiss",
+                {
+                    "notification_id": f"news_{self.entry.entry_id}_summary",
+                    "entity_id_format": "dashboard.{}",
+                },
+                blocking=True,
+            )
